@@ -67,7 +67,7 @@ router.post("/login", (req, res) => {
   const { errors, isValid } = validateLogin(req.body);
   //check validation
   if (!isValid) {
-    errors.email = 'Email is invalid'
+    errors.email = "Email is invalid";
     return res.status(400).json(errors);
   }
   const email = req.body.email;
@@ -88,7 +88,7 @@ router.post("/login", (req, res) => {
         jwt.sign(
           payload,
           keys.secretOrKey,
-          { expiresIn: 3600 },
+          { expiresIn: 360000 },
           (err, token) => {
             res.json({
               success: true,
@@ -97,7 +97,7 @@ router.post("/login", (req, res) => {
           }
         );
       } else {
-        errors.password = 'Password incorrect'
+        errors.password = "Password incorrect";
         return res.status(400).json(errors);
       }
     });
