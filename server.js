@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const emoji = require("node-emoji");
 
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
@@ -34,6 +35,9 @@ app.use("/api/posts", posts);
 
 const port = process.env.PORT || 5000;
 
+// emojis come from json file here https://raw.githubusercontent.com/omnidan/node-emoji/master/lib/emoji.json
+const earth = emoji.get("earth_americas");
+
 app.listen(port, () => {
-  console.log(`server running on port ${port}!`);
+  console.log(`${earth} server running on port ${port}!`);
 });

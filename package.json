@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "client": "cd client && npm run start",
+    "dev": "concurrently \"nodemon server.js\" \"npm run client\"",
+    "setup": "npm install && cd client && npm install",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "repository": {
     "type": "git",
@@ -25,11 +28,13 @@
     "gravatar": "^1.6.0",
     "jsonwebtoken": "^8.2.2",
     "mongoose": "^5.1.4",
+    "node-emoji": "^1.8.1",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "validator": "^10.3.0"
   },
   "devDependencies": {
+    "concurrently": "^3.5.1",
     "nodemon": "^1.17.5"
   }
 }
