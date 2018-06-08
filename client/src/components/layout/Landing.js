@@ -1,7 +1,17 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { PropTypes } from "prop-types";
+import { connect } from "react-redux";
 
 class Landing extends Component {
+
+  componentDidMount = () => {
+    // this makes it so the user doesn't got back to dashboard page if they type / in the url...just redirects them to dashboard because they are already logged in
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+  };
+
   render() {
     return (
       <div className="landing">
@@ -30,4 +40,12 @@ class Landing extends Component {
     );
   }
 }
-export default Landing;
+
+Landing.PropTypes = {
+  auth: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+export default connect(mapStateToProps)(Landing);
