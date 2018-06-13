@@ -216,7 +216,7 @@ router.post(
           description: req.body.description
         };
 
-        //add to experience array
+        //add to education array
         profile.education.unshift(newEdu);
         profile.save().then(profile => res.json(profile));
       })

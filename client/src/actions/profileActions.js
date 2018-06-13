@@ -40,6 +40,64 @@ export const createProfile = (profileData, history) => dispatch => {
     );
 };
 
+//add experience
+export const addExperience = (profileData, history) => dispatch => {
+  axios
+    .post("/api/profile/experience", profileData)
+    .then(res => history.push("/dashboard"))
+    .catch(err => (
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    ))
+};
+
+//delete experience
+export const deleteExperience = (expId) => dispatch => {
+  axios
+    .delete("/api/profile/experience/" + expId)
+    .then(res => dispatch({
+      type: GET_PROFILE,
+      payload: res.data
+    }))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+//add education
+export const addEducation = (profileData, history) => dispatch => {
+  axios
+    .post("/api/profile/education", profileData)
+    .then(res => history.push("/dashboard"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+//delete education
+export const deleteEducation = (eduId) => dispatch => {
+  axios
+    .delete("/api/profile/educaton/" + eduId)
+    .then(res => dispatch({
+      type: GET_PROFILE,
+      payload: res.data
+    }))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 //delete account and profile
 export const deleteAccount = () => dispatch => {
   if (window.confirm("Are you sure? This cannot be undone.")) {
