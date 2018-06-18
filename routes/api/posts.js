@@ -116,7 +116,7 @@ router.post(
             .json({ notliked: "You haven't liked this post yet" });
         }
         //get remove index
-        const removeIndex = posts.likes.map(element => {
+        const removeIndex = post.likes.map(element => {
           element.user.toString().indexOf(req.user.id);
         });
         //splice out of array
