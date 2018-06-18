@@ -35,18 +35,25 @@ app.use("/api/profile", profile);
 app.use("/api/posts", posts);
 
 //server static assets if in production
-if(process.env.NODE_ENV === "production"){
-  //set static folder
-  app.use(express.static("client/build"))
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
-  })
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
 }
 
 const port = process.env.PORT || 5000;
 
+if (process.env.MONGODB_URI){
+  mongoose.connect(process.env.MONGODB_URI)
+} else {
+  mongoose.connect(db)
+}
+
 // emojis come from json file here https://raw.githubusercontent.com/omnidan/node-emoji/master/lib/emoji.json
 const earth = emoji.get("earth_americas");
+
+app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
+
 
 app.listen(port, () => {
   console.log(`${earth} server running on port ${port}!`);
