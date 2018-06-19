@@ -28,6 +28,9 @@ const ProfileSchema = new Schema({
     type: [String], //means an array of strings
     required: true
   },
+  image: {
+    type: String
+  },
   bio: {
     type: String
   },
