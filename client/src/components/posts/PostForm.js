@@ -10,6 +10,8 @@ class PostForm extends Component {
     errors: {}
   };
   componentWillReceiveProps(nextProps){
+    const {user} = this.props.auth;
+    console.log(user)
     if (nextProps.errors){
       this.setState({errors: nextProps.errors})
     }
@@ -21,7 +23,8 @@ class PostForm extends Component {
     const newPost = {
       text: this.state.text,
       name: user.name,
-      avatar: user.avatar
+      avatar: user.avatar,
+      image: user.image
     }
     this.props.addPost(newPost);
     this.setState({text: ""})

@@ -1,7 +1,6 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
-
 import { GET_ERRORS } from "./types";
 import { SET_CURRENT_USER } from "./types";
 
@@ -14,6 +13,21 @@ export const registerUser = (userData, history) => dispatch => {
     .then(result => {
       history.push("/login");
     })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+//add picture
+export const addPicture = (pic) => dispatch => {
+  console.log("pic", pic)
+  axios
+    .post("/api/users/picture", pic)
+    .then(res => console.log(res)
+    )
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

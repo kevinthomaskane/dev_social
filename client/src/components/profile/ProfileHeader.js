@@ -2,21 +2,29 @@ import React, { Component } from "react";
 import isEmpty from "../../validation/isEmpty";
 
 class ProfileHeader extends Component {
+
+  tryRequire = myPath => {
+    
+  }
+  
   render() {
     const { profile } = this.props;
-
-    console.log(profile.image)
     return (
       <div className="row">
         <div className="col-md-12">
           <div className="card card-body bg-info text-white mb-3">
             <div className="row">
               <div className="col-4 col-md-3 m-auto">
-                <img
-                  className="rounded-circle"
-                  src={`../../../../${profile.image}`}
-                  alt=""
-                />
+              {profile.user.image !== undefined ? (<img
+                className="rounded-circle"
+                src={`../../../${profile.user.image}`}
+                alt=""
+              />) : (<img
+              className="rounded-circle"
+              src={profile.user.avatar}
+              alt=""
+            />)}
+                
               </div>
             </div>
             <div className="text-center">

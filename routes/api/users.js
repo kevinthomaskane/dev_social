@@ -6,6 +6,17 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: function(req, res, cb){
+    cb(null, "uploads/")
+  },
+  filename: function(req, res, cb){
+    console.log(res)
+    cb(null, res.originalname)
+  }
+})
+const upload = multer({ storage: storage });
 
 //load input validation
 const validateRegisterInput = require("../../validation/register");
@@ -83,7 +94,7 @@ router.post("/login", (req, res) => {
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
         //user matched
-        const payload = { id: user.id, name: user.name, avatar: user.avatar }; //create jwt payload
+        const payload = { id: user.id, name: user.name, avatar: user.avatar, image: user.image }; //create jwt payload
         //sign token
         jwt.sign(
           payload,
@@ -103,6 +114,36 @@ router.post("/login", (req, res) => {
     });
   });
 });
+
+// @route     POST api/users/picture
+// @desc      add a profile picture
+// @access    Private
+router.post(
+  "/picture",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  (req, res) => {
+   
+    console.log(req.file);
+    const errors = {};
+    User.findOne({ _id: req.user.id }).then(user => {
+      console.log("user", user)
+      if (user) {
+        User.findOneAndUpdate(
+          {
+            _id: req.user.id
+          },
+          { $set: {image : req.file.path} },
+          { 
+            new: true
+          }
+        ).then(user => res.json(user));
+      }
+    });
+    // req.file is the `avatar` file
+    // req.body will hold the text fields, if there were any
+  }
+);
 
 // @route     GET api/users/current
 // @desc      return current user

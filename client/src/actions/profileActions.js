@@ -5,8 +5,7 @@ import {
   PROFILE_LOADING,
   GET_ERRORS,
   CLEAR_CURRENT_PROFILE,
-  SET_CURRENT_USER,
-  ADD_PICTURE
+  SET_CURRENT_USER
 } from "./types";
 
 //get current profile
@@ -93,20 +92,7 @@ export const addExperience = (profileData, history) => dispatch => {
     ))
 };
 
-//add picture
-export const addPicture = (pic) => dispatch => {
-  console.log("pic", pic)
-  axios
-    .post("/api/profile/picture", pic)
-    .then(res => console.log(res)
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
+
 
 //delete experience
 export const deleteExperience = (expId) => dispatch => {

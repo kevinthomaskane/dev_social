@@ -147,6 +147,7 @@ router.post(
           text: req.body.text,
           name: req.body.name,
           avatar: req.body.avatar,
+          image: req.body.image,
           user: req.user.id
         };
         //add to comments array
@@ -199,6 +200,7 @@ router.post(
       text: req.body.text,
       name: req.body.name,
       avatar: req.body.avatar,
+      image: req.body.image,
       user: req.user.id
     });
 

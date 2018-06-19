@@ -12,7 +12,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use("/uploads", express.static("uploads"))
+app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
 // DB Config
 const db = require("./config/keys").mongoURI;

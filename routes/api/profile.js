@@ -2,19 +2,6 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const passport = require("passport");
-const multer = require("multer");
-
-const fs = require("fs");
-const storage = multer.diskStorage({
-  destination: function(req, res, cb){
-    cb(null, "uploads/")
-  },
-  filename: function(req, res, cb){
-    console.log(res)
-    cb(null, res.originalname)
-  }
-})
-const upload = multer({ storage: storage });
 const validateProfileInput = require("../../validation/profile");
 const validateExperienceInput = require("../../validation/experience");
 const validateEducationInput = require("../../validation/education");
@@ -38,7 +25,7 @@ router.get("/test", (req, res) => res.json({ message: "profile works" }));
 router.get("/all", (req, res) => {
   const errors = {};
   Profile.find()
-    .populate("user", ["name", "avatar"])
+    .populate("user", ["name", "avatar", "image"])
     .then(profiles => {
       if (!profiles) {
         return res.status(404).json({ message: "There are no profiles" });
@@ -55,7 +42,7 @@ router.get("/all", (req, res) => {
 router.get("/handle/:handle", (req, res) => {
   const errors = {};
   Profile.findOne({ handle: req.params.handle })
-    .populate("user", ["name", "avatar"])
+    .populate("user", ["name", "avatar", "image"])
     .then(profile => {
       if (!profile) {
         errors.noprofile = "There is no profile for this user";
@@ -73,7 +60,7 @@ router.get("/handle/:handle", (req, res) => {
 router.get("/user/:user_id", (req, res) => {
   const errors = {};
   Profile.findOne({ user: req.params.user_id })
-    .populate("user", ["name", "avatar"])
+    .populate("user", ["name", "avatar", "image"])
     .then(profile => {
       if (!profile) {
         errors.noprofile = "There is no profile for this user";
@@ -96,7 +83,7 @@ router.get(
   (req, res) => {
     const errors = {};
     Profile.findOne({ user: req.user.id })
-      .populate("user", ["name", "avatar"])
+      .populate("user", ["name", "avatar", "image"])
       .then(profile => {
         if (!profile) {
           errors.profile = "There is no profile for this user";
@@ -105,35 +92,6 @@ router.get(
         res.json(profile);
       })
       .catch(err => res.status(404).json(err));
-  }
-);
-
-// @route     POST api/profile/picture
-// @desc      add a profile picture
-// @access    Private
-router.post(
-  "/picture",
-  passport.authenticate("jwt", { session: false }),
-  upload.single("image"),
-  (req, res) => {
-   
-    console.log(req.file);
-    const errors = {};
-    Profile.findOne({ user: req.user.id }).then(profile => {
-      if (profile) {
-        Profile.findOneAndUpdate(
-          {
-            user: req.user.id
-          },
-          { $set: {image : req.file.path} },
-          { 
-            new: true
-          }
-        ).then(profile => res.json(profile));
-      }
-    });
-    // req.file is the `avatar` file
-    // req.body will hold the text fields, if there were any
   }
 );
 
