@@ -6,4 +6,4 @@
 <p>The focus of this application was building an extensive front-end using React.js and Redux.  The back-end uses Node.js and MongoDB.</p>
 <p>Other technologies include: JSON Web Token Authentication, Passport.js, Mongoose, & Bootstrap</p>
 
-[https://polar-anchorage-42536.herokuapp.com/] (You can view the deployed application here)
+You can view the deployed application here: https://polar-anchorage-42536.herokuapp.com/
