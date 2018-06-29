@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addPicture } from "../../actions/authActions";
+import "./ProfileActions.css"
 
 class ProfileActions extends Component {
 
@@ -20,6 +21,8 @@ class ProfileActions extends Component {
   }
 
   render() {
+    let myButtonText = this.state.picture !== "" ? "Ready to Upload" : "Upload Image"
+    let disabled = this.state.picture !== "" ? false : true
     return (
       <div className="btn-group mb-4" role="group">
         <Link to="/edit-profile" className="btn btn-light">
@@ -33,8 +36,8 @@ class ProfileActions extends Component {
           <i className="fas fa-graduation-cap text-info mr-1" />
           Add Education
         </Link>
-        <input id="picture-upload" type="file" name="picture" onChange={this.onChange}/>
-        <button onClick={this.onSubmit}>Upload</button>
+        <input style={{"width": 230}} id="picture-upload" type="file" name="picture" className="custom-file-input" onChange={this.onChange}/>
+        <button disabled={disabled} id="upload-button" onClick={this.onSubmit}>{myButtonText}</button>
       </div>
     );
   }

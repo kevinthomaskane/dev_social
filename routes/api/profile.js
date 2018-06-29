@@ -30,6 +30,7 @@ router.get("/all", (req, res) => {
       if (!profiles) {
         return res.status(404).json({ message: "There are no profiles" });
       }
+      console.log(profiles)
       res.json(profiles);
     })
     .catch(error => res.status(404).json(error));

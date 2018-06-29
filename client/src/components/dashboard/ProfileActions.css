@@ -1,0 +1,57 @@
+/* ::-webkit-file-upload-button {
+  content: "random";
+  background: #f9f9f9;
+  color: black;
+  border: none;
+  padding: 0.5em;
+  cursor: pointer;
+}
+
+::-webkit-file-upload-button:hover {
+  
+  background: #e4e3e3;
+  color: black;
+  border: none;
+  padding: 0.5em;
+  cursor: pointer;
+} */
+
+.custom-file-input {
+  opacity: 1;
+  background: #f9f9f9;
+}
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+  width: 0;
+}
+.custom-file-input::before {
+  content: 'Upload profile picture';
+  display: inline-block;
+  background: #f9f9f9;
+  height: 100%;
+  border: none;
+  padding: 7px;
+  outline: none;
+  white-space: nowrap;
+  width: 230px;
+  -webkit-user-select: none;
+  cursor: pointer;
+}
+.custom-file-input:hover::before {
+  background: #e4e3e3;
+}
+
+.custom-file-input:focus{
+  outline: 0;
+}
+
+#upload-button {
+  border: none;
+  background: #f9f9f9;
+}
+
+#upload-button:hover {
+  border: none;
+  background: #e4e3e3;
+  cursor: pointer;
+}

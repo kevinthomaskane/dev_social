@@ -4,8 +4,13 @@ import { connect } from "react-redux";
 import classnames from "classnames";
 import { Link } from "react-router-dom";
 import { deletePost, addLike, removeLike } from "../../actions/postActions";
+import { getProfiles } from "../../actions/profileActions";
 
 class PostItem extends Component {
+  componentWillMount() {
+    this.props.getProfiles();
+  }
+
   onDeleteClick = id => {
     this.props.deletePost(id);
   };
@@ -28,22 +33,19 @@ class PostItem extends Component {
   };
 
   render() {
-    const { post, auth, showActions } = this.props;
+    const { post, auth, showActions, profile } = this.props;
 
+    console.log(profile)
     return (
       <div className="card card-body mb-3">
         <div className="row">
           <div className="col-md-2">
             <a href="profile.html">
-            {post.user.image !== undefined ? (<img
-              className="rounded-circle"
-              src={`../../../${post.image}`}
-              alt=""
-            />) : (<img
-            className="rounded-circle"
-            src={post.avatar}
-            alt=""
-          />)}
+              <img
+                className="rounded-circle d-none d-md-block"
+                src={post.avatar}
+                alt=""
+              />
             </a>
             <br />
             <p className="text-center">{post.name}</p>
@@ -100,17 +102,20 @@ PostItem.defaultProps = {
 
 PostItem.propTypes = {
   deletePost: PropTypes.func.isRequired,
+  getProfiles: PropTypes.func.isRequired,
   addLike: PropTypes.func.isRequired,
   removeLike: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  profile: state.profile
 });
 
 export default connect(
   mapStateToProps,
-  { deletePost, addLike, removeLike }
+  { deletePost, addLike, removeLike, getProfiles }
 )(PostItem);
